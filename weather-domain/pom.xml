@@ -11,34 +11,27 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>weather-application</artifactId>
-    <name>Weather Application</name>
+    <artifactId>weather-domain</artifactId>
+    <name>Weather Domain</name>
+
+    <properties>
+        <!-- 🔥 نسخه Lombok جداگانه برای این ماژول -->
+        <lombok.version>1.18.30</lombok.version>
+    </properties>
 
     <dependencies>
-        <!-- Domain Module -->
+        <!-- 🔥 Lombok بدون scope provided -->
         <dependency>
-            <groupId>com.weatherservice</groupId>
-            <artifactId>weather-domain</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
+        <!-- Jakarta Validation -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.3.30</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>5.3.30</version>
-        </dependency>
-
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
         </dependency>
     </dependencies>
 
@@ -51,6 +44,13 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

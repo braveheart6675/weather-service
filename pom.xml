@@ -17,7 +17,7 @@
         <module>weather-application</module>
         <module>weather-infrastructure</module>
         <module>weather-presentation</module>
-        <module>weather-boot</module>
+<!--        <module>weather-boot</module >-->
     </modules>
 
     <properties>
