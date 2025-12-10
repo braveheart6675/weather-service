@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.weatherservice.application.service.WeatherService;
-import com.weatherservice.presentation.dto.WeatherResponse;
 import com.weatherservice.presentation.mapper.WeatherMapper;
 import javax.validation.constraints.NotBlank;
 
