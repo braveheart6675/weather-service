@@ -3,6 +3,7 @@ package com.weatherservice.presentation.exception;
 import com.weatherservice.domain.exception.WeatherException;
 import com.weatherservice.domain.exception.WeatherNotFoundException;
 import com.weatherservice.presentation.dto.ApiErrorResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
