@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
-import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;

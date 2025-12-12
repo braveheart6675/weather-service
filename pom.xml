@@ -46,9 +46,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <spring-cloud.version>2024.0.1</spring-cloud.version>
-        <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
-        <swagger-annotations-jakarta.version>2.2.22</swagger-annotations-jakarta.version>
-        <jjwt.version>0.12.5</jjwt.version>
+        <openapi.version>2.7.0</openapi.version>
+        <jjwt.version>0.11.5</jjwt.version>
         <resilience4j.version>2.2.0</resilience4j.version>
         <lombok.version>1.18.34</lombok.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -72,14 +71,9 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations-jakarta</artifactId>
-                <version>${swagger-annotations-jakarta.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>${springdoc-openapi.version}</version>
+                <version>${openapi.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

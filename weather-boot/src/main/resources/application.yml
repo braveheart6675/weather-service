@@ -1,10 +1,8 @@
 spring:
   application:
     name: weather-service
-
   cache:
     type: redis
-
   data:
     redis:
       host: localhost
@@ -29,14 +27,22 @@ openweather:
     url: https://api.openweathermap.org/data/2.5
     units: metric
 
+# SpringDoc Configuration
 springdoc:
   api-docs:
+    enabled: true
     path: /api-docs
   swagger-ui:
-    path: /swagger-ui.html
     enabled: true
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    csrf:
+      enabled: false  # برای تست غیرفعال کنید
 
 logging:
   level:
     com.weatherservice: INFO
+    org.springframework.security: DEBUG  # برای debug امنیت
     org.springframework.data.redis: WARN

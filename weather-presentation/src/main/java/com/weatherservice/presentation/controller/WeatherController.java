@@ -1,4 +1,4 @@
-package com.weatherservice.presentation.controler;
+package com.weatherservice.presentation.controller;
 
 import com.weatherservice.application.service.WeatherService;
 import com.weatherservice.presentation.dto.WeatherResponse;

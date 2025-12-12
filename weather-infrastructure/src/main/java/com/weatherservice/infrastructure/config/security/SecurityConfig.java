@@ -2,6 +2,7 @@ package com.weatherservice.infrastructure.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,14 +16,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz
-                        // همه endpointها مجاز (برای development)
-                        .anyRequest().permitAll()
-                )
-                // غیرفعال کردن فرم login
-                .formLogin(AbstractHttpConfigurer::disable)
-                // غیرفعال کردن basic auth
-                .httpBasic(AbstractHttpConfigurer::disable);
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()  // همه درخواست‌ها آزاد
+                );
 
         return http.build();
     }
