@@ -14,38 +14,29 @@
     <artifactId>weather-infrastructure</artifactId>
     <name>Weather Infrastructure</name>
 
-    <properties>
-        <!-- Lombok version -->
-        <lombok.version>1.18.30</lombok.version>
-    </properties>
-
     <dependencies>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-
-        <!-- Application Module -->
         <dependency>
             <groupId>com.weatherservice</groupId>
             <artifactId>weather-application</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Spring Boot Starters -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- Spring Cloud -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!-- Resilience4j -->
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-spring-boot3</artifactId>
@@ -56,51 +47,16 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-feign</artifactId>
         </dependency>
 
-        <!-- Jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

@@ -10,48 +10,19 @@
         <artifactId>weather-service-parent</artifactId>
         <version>1.0.0</version>
     </parent>
-
     <artifactId>weather-domain</artifactId>
     <name>Weather Domain</name>
 
-    <properties>
-        <!-- 🔥 نسخه Lombok جداگانه برای این ماژول -->
-        <lombok.version>1.18.30</lombok.version>
-    </properties>
-
     <dependencies>
-        <!-- 🔥 Lombok بدون scope provided -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
 
-        <!-- Jakarta Validation -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
