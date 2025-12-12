@@ -2,17 +2,6 @@ spring:
   application:
     name: weather-service
 
-  security:
-      enabled: false
-  autoconfigure:
-      exclude:
-        - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-        - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
-        - org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration
-
-  main:
-    allow-bean-definition-overriding: true
-
   cache:
     type: redis
 
@@ -22,22 +11,8 @@ spring:
       port: 6379
       timeout: 2000ms
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: basic
-
-openweather:
-  api:
-    key: ${OPENWEATHER_API_KEY:your_api_key_here}
-    url: https://api.openweathermap.org/data/2.5
-    units: metric
-
 server:
-  port: 8081
+  port: 8080
 
 management:
   endpoints:
@@ -48,18 +23,20 @@ management:
     health:
       show-details: always
 
-logging:
-  level:
-    com.weatherservice: DEBUG
-    org.springframework.data.redis: INFO
-    feign: INFO
+openweather:
+  api:
+    key: ${OPENWEATHER_API_KEY:your_api_key_here}
+    url: https://api.openweathermap.org/data/2.5
+    units: metric
 
 springdoc:
   api-docs:
-    enabled: true
-    path: /v3/api-docs
+    path: /api-docs
   swagger-ui:
-    enabled: true
     path: /swagger-ui.html
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
+    enabled: true
+
+logging:
+  level:
+    com.weatherservice: INFO
+    org.springframework.data.redis: WARN
