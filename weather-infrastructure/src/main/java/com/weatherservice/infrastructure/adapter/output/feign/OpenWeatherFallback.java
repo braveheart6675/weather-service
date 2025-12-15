@@ -12,7 +12,7 @@ import java.util.Collections;
 public class OpenWeatherFallback implements OpenWeatherFeignClient {
 
     @Override
-    public OpenWeatherResponse getWeather(String city, String units) {
+    public OpenWeatherResponse getWeather(String city, String apiKey, String units) {
         log.warn("OpenWeather API is unavailable. Using fallback for city: {}", city);
 
         OpenWeatherResponse response = new OpenWeatherResponse();
@@ -21,6 +21,7 @@ public class OpenWeatherFallback implements OpenWeatherFeignClient {
         OpenWeatherResponse.Sys sys = new OpenWeatherResponse.Sys();
         sys.setCountry("Unknown");
         response.setSys(sys);
+        response.setName(city);
 
         OpenWeatherResponse.Main main = new OpenWeatherResponse.Main();
         main.setTemp(20.0);

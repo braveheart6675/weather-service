@@ -1,48 +1,50 @@
+# application.yml
+openweather:
+  api:
+    key: "1bb5c0e5d141e549c20dad4d05a698d6"  # کلید فعال شما
+    url: "https://api.openweathermap.org/data/2.5"
+    units: "metric"
+
+# Redis Configuration
 spring:
-  application:
-    name: weather-service
-  cache:
-    type: redis
   data:
     redis:
       host: localhost
       port: 6379
-      timeout: 2000ms
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000  # 10 دقیقه کش
+      cache-null-values: false
 
-server:
-  port: 8080
+# Resilience4j Configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      weatherService:
+        register-health-indicator: true
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      weatherService:
+        max-attempts: 3
+        wait-duration: 1s
 
+# Actuator
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,metrics,circuitbreakers
   endpoint:
     health:
       show-details: always
 
-openweather:
-  api:
-    key: ${OPENWEATHER_API_KEY:your_api_key_here}
-    url: https://api.openweathermap.org/data/2.5
-    units: metric
-
-# SpringDoc Configuration
-springdoc:
-  api-docs:
-    enabled: true
-    path: /api-docs
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
-    try-it-out-enabled: true
-    csrf:
-      enabled: false  # برای تست غیرفعال کنید
-
+# Logging
 logging:
   level:
-    com.weatherservice: INFO
-    org.springframework.security: DEBUG  # برای debug امنیت
-    org.springframework.data.redis: WARN
+    com.weatherservice: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
