@@ -14,9 +14,18 @@ public class FeignConfig {
     @Value("${openweather.api.key}")
     private String apiKey;
 
+    @Value("${openweather.api.units}")
+    private String units;
+
+    /**
+     * Adds OpenWeather required query params globally
+     */
     @Bean
-    public RequestInterceptor apiKeyInterceptor() {
-        return template -> template.query("appid", apiKey);
+    public RequestInterceptor openWeatherRequestInterceptor() {
+        return template -> {
+            template.query("appid", apiKey);
+            template.query("units", units);
+        };
     }
 
     @Bean
@@ -26,6 +35,6 @@ public class FeignConfig {
 
     @Bean
     public ErrorDecoder errorDecoder(ObjectMapper objectMapper) {
-        return new FeignErrorDecoder(objectMapper);
+        return new  FeignErrorDecoder(objectMapper);
     }
 }

@@ -11,8 +11,9 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class OpenWeatherFallback implements OpenWeatherFeignClient {
 
+
     @Override
-    public OpenWeatherResponse getWeather(String city, String apiKey, String units) {
+    public OpenWeatherResponse getWeather(String city) {
         log.warn("OpenWeather API is unavailable. Using fallback for city: {}", city);
 
         OpenWeatherResponse response = new OpenWeatherResponse();

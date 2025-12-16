@@ -1,6 +1,7 @@
 package com.weatherservice.presentation.controller;
 
 import com.weatherservice.application.service.WeatherService;
+import com.weatherservice.domain.model.Weather;
 import com.weatherservice.presentation.dto.WeatherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,16 +30,6 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @Operation(
-            summary = "Get weather by city",
-            description = "Retrieves current weather information for a specific city"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved weather data"),
-            @ApiResponse(responseCode = "400", description = "Invalid city name"),
-            @ApiResponse(responseCode = "404", description = "City not found"),
-            @ApiResponse(responseCode = "503", description = "Weather service unavailable")
-    })
     @GetMapping("/{city}")
     public ResponseEntity<WeatherResponse> getWeather(
             @PathVariable @NotBlank String city,
@@ -46,18 +37,16 @@ public class WeatherController {
 
         log.info("Weather request for city: {}, fresh: {}", city, fresh);
 
-        com.weatherservice.domain.model.Weather weather;
-
+        Weather weather;
         if (fresh) {
             weather = weatherService.getWeather(city);
             return ResponseEntity.ok(WeatherMapper.toResponse(weather, false));
         } else {
             weather = weatherService.getCachedWeather(city);
-            boolean fromCache = weather.getTimestamp()
-                    .isAfter(java.time.LocalDateTime.now().minusMinutes(9));
-            return ResponseEntity.ok(WeatherMapper.toResponse(weather, fromCache));
+            return ResponseEntity.ok(WeatherMapper.toResponse(weather, true));
         }
     }
+
 
     @DeleteMapping("/cache/{city}")
     @Operation(summary = "Clear cache for a city")

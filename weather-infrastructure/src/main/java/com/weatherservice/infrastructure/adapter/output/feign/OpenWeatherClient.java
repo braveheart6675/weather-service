@@ -34,7 +34,7 @@ public class OpenWeatherClient implements WeatherClient {
         log.info("Fetching weather from OpenWeather API for city: {}", city);
 
         try {
-            OpenWeatherResponse response = openWeatherFeignClient.getWeather(city, apiKey, units);
+            OpenWeatherResponse response = openWeatherFeignClient.getWeather(city);
             log.debug("Successfully fetched weather for city: {}", city);
             return mapToDomain(response);
         } catch (FeignException e) {
