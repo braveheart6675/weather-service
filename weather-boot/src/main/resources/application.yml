@@ -1,8 +1,8 @@
 # application.yml
 openweather:
   api:
-    key: "1bb5c0e5d141e549c20dad4d05a698d6"  # کلید فعال شما
-    url: "https://api.openweathermap.org/data/2.52"
+    key: "1bb5c0e5d141e549c20dad4d05a698d6"
+    url: "https://api.openweathermap.org/data/2.5"
     units: "metric"
 
 # Redis Configuration

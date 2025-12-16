@@ -34,7 +34,6 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     log.error("Feign client error - Method: {}, Status: {}, Body: {}",
                             methodKey, response.status(), responseBody);
 
-                    // Parse OpenWeather API error if possible
                     if (responseBody.contains("\"cod\"")) {
                         try {
                             OpenWeatherError error = objectMapper.readValue(responseBody, OpenWeatherError.class);
@@ -43,7 +42,6 @@ public class FeignErrorDecoder implements ErrorDecoder {
                                     HttpStatus.valueOf(response.status())
                             );
                         } catch (IOException e) {
-                            // If parsing fails, use generic error
                         }
                     }
                 }

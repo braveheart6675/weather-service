@@ -60,14 +60,12 @@ public class OpenWeatherClient implements WeatherClient {
                 .build();
     }
 
-    // Fallback برای Circuit Breaker
     public Weather circuitBreakerFallback(String city, Throwable throwable) {
         log.warn("Circuit breaker triggered for city: {}. Using fallback data. Cause: {}",
                 city, throwable.getMessage());
         return getFallbackWeather(city);
     }
 
-    // Fallback برای Retry
     public Weather retryFallback(String city, Throwable throwable) {
         log.warn("All retry attempts failed for city: {}. Using fallback data. Cause: {}",
                 city, throwable.getMessage());
