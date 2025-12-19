@@ -1,35 +1,35 @@
-Weather Service 🌤️
+# Weather Service 🌤️
+
+A clean, resilient, Redis-cached Weather API built with Spring Boot 3.4,  
+OpenFeign, and Resilience4j.
 
 A production-ready Spring Boot 3.4 / Java 21 Weather Service built with Clean Architecture, using OpenFeign to integrate with the OpenWeather API, Redis for caching, and Resilience4j for fault tolerance (Circuit Breaker & Fallback).
 
-✨ Features
+---
 
-Clean Architecture (Domain / Application / Infrastructure / Presentation)
+## ✨ Features
 
-Java 21 & Spring Boot 3.4
+- Clean Architecture (Domain / Application / Infrastructure / Presentation)
+- Java 21 & Spring Boot 3.4
+- OpenFeign client for external API integration
+- Redis-based caching (Spring Cache abstraction)
+- Resilience4j Circuit Breaker with fallback
+- REST API for weather data by city
+- Actuator endpoints for monitoring
+- Docker & Docker Compose ready
+- Unit-tested service layer
 
-OpenFeign client for external API integration
+---
 
-Redis-based caching (Spring Cache abstraction)
+## 🏗️ Architecture
 
-Resilience4j Circuit Breaker with fallback
-
-REST API for weather data by city
-
-Actuator endpoints for monitoring
-
-Docker & Docker Compose ready
-
-Unit-tested service layer
-
-🏗️ Architecture
+```text
 weather-service
 ├── weather-domain         # Core domain models & business rules
 ├── weather-application    # Use cases & service layer
 ├── weather-infrastructure # Feign clients, Redis, external adapters
 ├── weather-presentation   # REST controllers
 └── weather-boot           # Spring Boot application (entry point)
-
 
 This project strictly follows Clean Architecture principles:
 
@@ -41,15 +41,14 @@ External systems (Redis, OpenWeather) are replaceable
 
 🔌 External API
 
-This service integrates with OpenWeather API.
+This service integrates with the OpenWeather API.
 
-Required configuration:
-
+Required configuration
 openweather:
-api:
-key: YOUR_API_KEY
-url: https://api.openweathermap.org/data/2.5
-units: metric
+  api:
+    key: YOUR_API_KEY
+    url: https://api.openweathermap.org/data/2.5
+    units: metric
 
 🚀 REST API
 Get weather by city (cached)
@@ -63,13 +62,13 @@ DELETE /api/weather/cache?city=London
 
 🧠 Caching (Redis)
 
-Redis is used as the only cache provider
+Redis is used as the cache provider
 
-Cache key: weather::{city}
+Cache key format: weather::{city}
 
 TTL: 10 minutes
 
-Cache is applied at service level using @Cacheable
+Cache applied at service level using Spring Cache
 
 @Cacheable(value = "weather", key = "#city.toLowerCase()")
 public Weather getCachedWeather(String city)
@@ -91,8 +90,8 @@ Network errors occur
 Circuit is OPEN
 
 @CircuitBreaker(
-name = "weatherService",
-fallbackMethod = "fallback"
+    name = "weatherService",
+    fallbackMethod = "fallback"
 )
 
 Fallback behavior
@@ -100,6 +99,7 @@ Fallback behavior
 When triggered, a safe default Weather response is returned:
 
 description: "Service unavailable (fallback)"
+
 temperature: 20.0
 
 🔍 Monitoring & Actuator
@@ -121,19 +121,11 @@ Example:
 
 WeatherServiceImplTest
 
-Tests fallback behavior
-
-Tests normal service execution
-
 Run tests:
 
 mvn test
 
 🐳 Docker Support
-Dockerfile
-
-The project includes a Dockerfile at root level.
-
 Build image
 docker build -t weather-service .
 
@@ -172,17 +164,17 @@ Docker / Docker Compose
 mvn clean package
 
 
-Final runnable JAR is produced by weather-boot module.
+The final runnable JAR is produced by the weather-boot module.
 
 📌 Notes
 
 Redis must be running for caching to work
 
-API key should never be committed (use env variables in production)
+API keys should never be committed (use environment variables in production)
 
 Designed for easy extension (new providers, new APIs)
 
 👤 Author
 
-Developed as a clean, production-grade Spring Boot example
-focused on architecture, resilience, and real-world patterns.
+Developed as a clean, production-grade Spring Boot example,
+focused on architecture, resilience, and real-world patterns
