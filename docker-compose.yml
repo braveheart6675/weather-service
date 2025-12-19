@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    container_name: weather-redis
+    ports:
+      - "6379:6379"
+
+  weather-service:
+    image: weather-service
+    container_name: weather-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    environment:
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      OPENWEATHER_API_KEY: your_api_key

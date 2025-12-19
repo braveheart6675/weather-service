@@ -1,90 +1,188 @@
-# 🌤️ Weather Service
+Weather Service 🌤️
 
-A Spring Boot microservice with Clean Architecture that provides weather information by wrapping OpenWeather API.
+A production-ready Spring Boot 3.4 / Java 21 Weather Service built with Clean Architecture, using OpenFeign to integrate with the OpenWeather API, Redis for caching, and Resilience4j for fault tolerance (Circuit Breaker & Fallback).
 
-## 🏗️ Architecture
-- **Clean Architecture** with multi-module Maven
-- **Domain Layer**: Core business logic and entities
-- **Application Layer**: Use cases and business rules
-- **Infrastructure Layer**: External APIs (OpenWeather) and Redis caching
-- **Presentation Layer**: REST API with Swagger documentation
+✨ Features
 
-## 🚀 Features
-- ✅ OpenWeather API integration with Feign Client
-- ✅ Redis caching for 10-minute TTL
-- ✅ Circuit breaker with Resilience4j
-- ✅ Fallback mechanism for API failures
-- ✅ REST API with Swagger/OpenAPI
-- ✅ Global exception handling
-- ✅ Input validation
-- ✅ Multi-module Maven structure
+Clean Architecture (Domain / Application / Infrastructure / Presentation)
 
-## 🛠️ Tech Stack
-- Java 11
-- Spring Boot 2.7
-- Spring Cloud OpenFeign
-- Spring Data Redis
-- Resilience4j
-- Swagger/OpenAPI 3
-- Maven
-- Docker (آماده)
+Java 21 & Spring Boot 3.4
 
-## 📁 Project Structure
-weather-service/
-├── weather-domain/ # Core business logic
-├── weather-application/ # Use cases
-├── weather-infrastructure/ # External integrations
-├── weather-presentation/ # REST API layer
-└── weather-boot/ # Spring Boot app
+OpenFeign client for external API integration
+
+Redis-based caching (Spring Cache abstraction)
+
+Resilience4j Circuit Breaker with fallback
+
+REST API for weather data by city
+
+Actuator endpoints for monitoring
+
+Docker & Docker Compose ready
+
+Unit-tested service layer
+
+🏗️ Architecture
+weather-service
+├── weather-domain         # Core domain models & business rules
+├── weather-application    # Use cases & service layer
+├── weather-infrastructure # Feign clients, Redis, external adapters
+├── weather-presentation   # REST controllers
+└── weather-boot           # Spring Boot application (entry point)
 
 
-## 🔧 Setup & Run
-1. Clone repository
-2. Get OpenWeather API key from [openweathermap.org](https://openweathermap.org/api)
-3. Set environment variable:
-   ```bash
-   export OPENWEATHER_API_KEY=your_api_key_here
+This project strictly follows Clean Architecture principles:
 
-Run Redis:
-docker run -p 6379:6379 redis:alpine
+Domain layer has no dependency on Spring
 
-Run application:
-cd weather-boot
-mvn spring-boot:run
+Infrastructure depends on Application, not vice versa
 
-📚 API Documentation
-After running, visit: http://localhost:8080/swagger-ui.html
+External systems (Redis, OpenWeather) are replaceable
 
-Endpoints:
-GET /api/v1/weather/{city} - Get weather by city
+🔌 External API
 
-DELETE /api/v1/weather/cache/{city} - Clear cache for city
+This service integrates with OpenWeather API.
 
-GET /api/v1/weather/health - Health check
+Required configuration:
 
-🐳 Docker
-docker-compose up
+openweather:
+api:
+key: YOUR_API_KEY
+url: https://api.openweathermap.org/data/2.5
+units: metric
+
+🚀 REST API
+Get weather by city (cached)
+GET /api/weather?city=London
+
+Force fresh data (bypass cache)
+GET /api/weather?city=London&fresh=true
+
+Clear cache for a city
+DELETE /api/weather/cache?city=London
+
+🧠 Caching (Redis)
+
+Redis is used as the only cache provider
+
+Cache key: weather::{city}
+
+TTL: 10 minutes
+
+Cache is applied at service level using @Cacheable
+
+@Cacheable(value = "weather", key = "#city.toLowerCase()")
+public Weather getCachedWeather(String city)
+
+🛡️ Fault Tolerance & Fallback
+
+The service uses Resilience4j Circuit Breaker.
+
+Circuit Breaker name: weatherService
+
+Applied at service layer
+
+Automatic fallback when:
+
+OpenWeather API is unavailable
+
+Network errors occur
+
+Circuit is OPEN
+
+@CircuitBreaker(
+name = "weatherService",
+fallbackMethod = "fallback"
+)
+
+Fallback behavior
+
+When triggered, a safe default Weather response is returned:
+
+description: "Service unavailable (fallback)"
+temperature: 20.0
+
+🔍 Monitoring & Actuator
+
+Enabled Actuator endpoints:
+
+GET /actuator/health
+GET /actuator/metrics
+GET /actuator/circuitbreakers
+
+
+Circuit Breaker state can be monitored in real time.
 
 🧪 Testing
-bash
+
+Service layer unit tests are provided.
+
+Example:
+
+WeatherServiceImplTest
+
+Tests fallback behavior
+
+Tests normal service execution
+
+Run tests:
+
 mvn test
-📄 License
-MIT
 
-text
+🐳 Docker Support
+Dockerfile
 
-### **۲. اضافه کردن فایل‌های Docker:**
+The project includes a Dockerfile at root level.
 
-**`Dockerfile`:**
-```dockerfile
-FROM maven:3.8.4-openjdk-11 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+Build image
+docker build -t weather-service .
 
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY --from=build /app/weather-boot/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+Run container
+docker run -p 8080:8080 weather-service
 
+🐳 Docker Compose (with Redis)
+docker-compose up -d
+
+
+Services:
+
+weather-service
+
+redis
+
+⚙️ Tech Stack
+
+Java 21
+
+Spring Boot 3.4
+
+Spring Cloud OpenFeign
+
+Spring Cache
+
+Redis (Lettuce)
+
+Resilience4j
+
+Maven (multi-module)
+
+Docker / Docker Compose
+
+📦 Build
+mvn clean package
+
+
+Final runnable JAR is produced by weather-boot module.
+
+📌 Notes
+
+Redis must be running for caching to work
+
+API key should never be committed (use env variables in production)
+
+Designed for easy extension (new providers, new APIs)
+
+👤 Author
+
+Developed as a clean, production-grade Spring Boot example
+focused on architecture, resilience, and real-world patterns.
