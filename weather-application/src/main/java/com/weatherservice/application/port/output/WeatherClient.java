@@ -7,5 +7,4 @@ import com.weatherservice.domain.model.Weather;
  */
 public interface WeatherClient {
     Weather fetchWeather(String city);
-    Weather getFallbackWeather(String city);
 }

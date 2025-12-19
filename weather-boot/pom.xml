@@ -22,20 +22,29 @@
             <artifactId>weather-presentation</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.weatherservice</groupId>
             <artifactId>weather-application</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.weatherservice</groupId>
             <artifactId>weather-infrastructure</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.weatherservice</groupId>
             <artifactId>weather-domain</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -45,7 +54,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <dependency>
@@ -66,6 +75,7 @@
         </dependency>
 
     </dependencies>
+
 
     <build>
         <plugins>
